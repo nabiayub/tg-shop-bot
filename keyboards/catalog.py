@@ -1,7 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-
 def generate_catalog_kb(catalog):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[])
 
@@ -10,7 +9,7 @@ def generate_catalog_kb(catalog):
             [
                 InlineKeyboardButton(
                     text=category['text'],
-                    callback_data=category_cb
+                    callback_data=f'category:{category_cb}'
                 )
             ]
         )
