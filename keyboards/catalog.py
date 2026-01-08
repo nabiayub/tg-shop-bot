@@ -40,6 +40,7 @@ def generate_catalog_kb(catalog: dict) -> InlineKeyboardMarkup:
 
 def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> InlineKeyboardMarkup:
     '''
+    Generate a inline keyboard for the Telegram bot catalog for book list
     :param books: List of dictionaries, each containing book information.
                   Each dictionary should have at least the keys:
                   - 'id' (int): Unique book ID
@@ -60,7 +61,6 @@ def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> Inlin
 
                 )
             ]
-
         )
 
     keyboard.inline_keyboard.append(
@@ -70,3 +70,21 @@ def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> Inlin
     )
 
     return keyboard
+
+
+def back_to_category_books(category: str) -> InlineKeyboardMarkup:
+    '''
+    Generate a back button for Book view to return to Books of Category
+    :param category: string name of the category
+    :return: Inline keyboard with one button
+    '''
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='Back',
+                    callback_data=CategoryCBData(category=category).pack()
+                )
+            ]
+        ]
+    )

@@ -1,6 +1,6 @@
 from aiogram import F, Router, types
 
-from keyboards.catalog import generate_catalog_kb, CategoryCBData, generate_books_kb
+from keyboards.catalog import generate_catalog_kb, CategoryCBData, generate_books_kb, BookCBData, back_to_category_books
 
 router = Router()
 
@@ -131,3 +131,34 @@ async def catalog_info(callback: types.CallbackQuery, callback_data: CategoryCBD
             category=callback_data.category
         )
     )
+
+@router.callback_query(BookCBData.filter())
+async def book_info(callback: types.CallbackQuery, callback_data: BookCBData):
+    '''
+    Handler for viewing a specific book information.
+    :param callback: types.CallbackQuery
+    :param callback_data: object of BookCBData
+    '''
+    book_id = callback_data.id
+    category = CATALOG.get(callback_data.category)
+
+    book = None
+
+    for bk in category['books']:
+        if bk['id'] == book_id:
+            book = bk
+            break
+
+    if not book:
+        return await callback.answer('Book not found')
+
+    await callback.message.edit_text(
+        f'Name - {book["name"].format(book_id)}\n'
+        f'Description - {book["description"].format(book_id)}\n'
+        f'Price - {book["price"]} dollars\n\n'
+        'Do you want to buy this book?',
+        reply_markup=back_to_category_books(callback_data.category)
+
+
+    )
+
