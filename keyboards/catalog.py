@@ -2,6 +2,11 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
 
 
+class CategoryCBData(CallbackData, prefix='category'):
+    '''Callback data for selecting a book category'''
+    category: str
+
+
 def generate_catalog_kb(catalog: dict) -> InlineKeyboardMarkup:
     '''
     Generate a inline keyboard for the Telegram bot catalog
@@ -18,7 +23,7 @@ def generate_catalog_kb(catalog: dict) -> InlineKeyboardMarkup:
             [
                 InlineKeyboardButton(
                     text=category['text'],
-                    callback_data=f'category:{category_cb}'
+                    callback_data=CategoryCBData(category=category_cb).pack()
                 )
             ]
         )

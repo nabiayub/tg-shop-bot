@@ -1,6 +1,6 @@
 from aiogram import F, Router, types
 
-from keyboards.catalog import generate_catalog_kb
+from keyboards.catalog import generate_catalog_kb, CategoryCBData
 
 router = Router()
 
@@ -110,8 +110,8 @@ async def catalog(update: types.Message | types.CallbackQuery):
         )
 
 
-@router.callback_query(F.data.startswith('category'))
-async def catalog_info(callback: types.CallbackQuery):
+@router.callback_query(CategoryCBData.filter())
+async def catalog_info(callback: types.CallbackQuery, callback_data: CategoryCBData):
     '''
     Handler for viewing a specific catalog category.
 
@@ -122,8 +122,7 @@ async def catalog_info(callback: types.CallbackQuery):
     4. Provide a 'Back' button to return to the main catalog.
     '''
 
-    category_key = callback.data.split(':')[-1]
-    category = CATALOG[category_key]
+    category = CATALOG.get(callback_data.category)
 
     await callback.message.edit_text(
         text=category['description'],
