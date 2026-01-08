@@ -1,9 +1,16 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
+from typing import List, Dict
 
 
 class CategoryCBData(CallbackData, prefix='category'):
     '''Callback data for selecting a book category'''
+    category: str
+
+
+class BookCBData(CallbackData, prefix='book'):
+    '''Callback data for selecting a book'''
+    id: int
     category: str
 
 
@@ -27,5 +34,39 @@ def generate_catalog_kb(catalog: dict) -> InlineKeyboardMarkup:
                 )
             ]
         )
+
+    return keyboard
+
+
+def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> InlineKeyboardMarkup:
+    '''
+    :param books: List of dictionaries, each containing book information.
+                  Each dictionary should have at least the keys:
+                  - 'id' (int): Unique book ID
+                  - 'name' (str): Book name
+                  - 'description' (str): Book description
+                  - 'price' (int): Book price
+    :param category: string name of the category
+    :return: Inline keyboard with buttons as book names
+    '''
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[])
+
+    for book in books:
+        keyboard.inline_keyboard.append(
+            [
+                InlineKeyboardButton(
+                    text=book['name'].format(book['id']),
+                    callback_data=BookCBData(id=book['id'], category=category).pack()
+
+                )
+            ]
+
+        )
+
+    keyboard.inline_keyboard.append(
+        [
+            InlineKeyboardButton(text='<< Back', callback_data='catalog')
+        ]
+    )
 
     return keyboard

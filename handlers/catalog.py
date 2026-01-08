@@ -1,6 +1,6 @@
 from aiogram import F, Router, types
 
-from keyboards.catalog import generate_catalog_kb, CategoryCBData
+from keyboards.catalog import generate_catalog_kb, CategoryCBData, generate_books_kb
 
 router = Router()
 
@@ -126,14 +126,8 @@ async def catalog_info(callback: types.CallbackQuery, callback_data: CategoryCBD
 
     await callback.message.edit_text(
         text=category['description'],
-        reply_markup=types.InlineKeyboardMarkup(
-            inline_keyboard=[
-                [
-                    types.InlineKeyboardButton(
-                        text='Back',
-                        callback_data='catalog'
-                    )
-                ]
-            ]
+        reply_markup=generate_books_kb(
+            books=category['books'],
+            category=callback_data.category
         )
     )
