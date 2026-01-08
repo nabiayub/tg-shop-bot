@@ -2,10 +2,15 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
 from typing import List, Dict
 
+from sqlalchemy import ScalarResult
+
+from database import Category
+from repositories.categories import CategoryRepo
+
 
 class CategoryCBData(CallbackData, prefix='category'):
     '''Callback data for selecting a book category'''
-    category: str
+    category_id: int
 
 
 class BookCBData(CallbackData, prefix='book'):
@@ -14,23 +19,21 @@ class BookCBData(CallbackData, prefix='book'):
     category: str
 
 
-def generate_catalog_kb(catalog: dict) -> InlineKeyboardMarkup:
+def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMarkup:
+
     '''
     Generate a inline keyboard for the Telegram bot catalog
-    :param catalog:
-        catalog: A dictionary where keys are callbak IDs and valuesa are
-                dictionary with cateogry information.
-    :return:
-        InlineKeyboardMarkup: Inline keyboard with buttons
+    :param categories: List of categories to generate inline keyboards
+    :return: InlineKeyboardMarkup: Inline keyboard with buttons
     '''
     keyboard = InlineKeyboardMarkup(inline_keyboard=[])
 
-    for category_cb, category in catalog.items():
+    for category in categories:
         keyboard.inline_keyboard.append(
             [
                 InlineKeyboardButton(
-                    text=category['text'],
-                    callback_data=CategoryCBData(category=category_cb).pack()
+                    text=category.name,
+                    callback_data=CategoryCBData(category_id=category.id).pack()
                 )
             ]
         )
