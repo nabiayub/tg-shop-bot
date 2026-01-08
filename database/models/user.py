@@ -3,6 +3,9 @@ from sqlalchemy.orm import mapped_column, Mapped
 from sqlalchemy import BigInteger
 
 class User(BaseModel):
+    '''
+    Represents a users table
+    '''
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

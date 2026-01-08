@@ -4,6 +4,9 @@ from sqlalchemy import ForeignKey
 
 
 class User(BaseModel):
+    '''
+    Represents a books table
+    '''
     __tablename__ = 'bools'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
