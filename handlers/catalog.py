@@ -4,12 +4,89 @@ from keyboards.catalog import generate_catalog_kb
 
 router = Router()
 
+# CATALOG = {
+#     'romans':
+#         {
+#             'text': 'Romans',
+#             'description': 'Romans books',
+#             'books': [
+#                 {
+#                     'id': 1,
+#                     'name': 'Book {}',
+#                     'description': 'Book description {}',
+#                     'price': 100
+#                 },
+#
+#                 {
+#                     'id': 2,
+#                     'name': 'Book {}',
+#                     'description': 'Book description {}',
+#                     'price': 200
+#                 },
+#                 {
+#                     'id': 3,
+#                     'name': 'Book {}',
+#                     'description': 'Book description {}',
+#                     'price': 300
+#                 },
+#             ]
+#         },
+#     'fantasies': {'text': 'Fantasy', 'description': 'Fantasy books'},
+#     'horrors': {'text': 'Horror', 'description': 'Horror books'},
+#     'detectives': {'text': 'Detective', 'description': 'Detective books'},
+#     'documentaries': {'text': 'Documentary', 'description': 'Documentary books'},
+# }
+
 CATALOG = {
-    'romans': {'text': 'Romans', 'description': 'Romans books'},
-    'fantasies': {'text': 'Fantasy', 'description': 'Fantasy books'},
-    'horrors': {'text': 'Horror', 'description': 'Horror books'},
-    'detectives': {'text': 'Detective', 'description': 'Detective books'},
-    'documentaries': {'text': 'Documentary', 'description': 'Documentary books'},
+    'romans': {
+        'text': 'Romans',
+        'description': 'Romans books',
+        'books': [
+            {'id': 1, 'name': 'Book {}', 'description': 'Book description {}', 'price': 100},
+            {'id': 2, 'name': 'Book {}', 'description': 'Book description {}', 'price': 200},
+            {'id': 3, 'name': 'Book {}', 'description': 'Book description {}', 'price': 300},
+        ]
+    },
+
+    'fantasies': {
+        'text': 'Fantasy',
+        'description': 'Fantasy books',
+        'books': [
+            {'id': 1, 'name': 'Book {}', 'description': 'Book description {}', 'price': 100},
+            {'id': 2, 'name': 'Book {}', 'description': 'Book description {}', 'price': 200},
+            {'id': 3, 'name': 'Book {}', 'description': 'Book description {}', 'price': 300},
+        ]
+    },
+
+    'horrors': {
+        'text': 'Horror',
+        'description': 'Horror books',
+        'books': [
+            {'id': 1, 'name': 'Book {}', 'description': 'Book description {}', 'price': 100},
+            {'id': 2, 'name': 'Book {}', 'description': 'Book description {}', 'price': 200},
+            {'id': 3, 'name': 'Book {}', 'description': 'Book description {}', 'price': 300},
+        ]
+    },
+
+    'detectives': {
+        'text': 'Detective',
+        'description': 'Detective books',
+        'books': [
+            {'id': 1, 'name': 'Book {}', 'description': 'Book description {}', 'price': 100},
+            {'id': 2, 'name': 'Book {}', 'description': 'Book description {}', 'price': 200},
+            {'id': 3, 'name': 'Book {}', 'description': 'Book description {}', 'price': 300},
+        ]
+    },
+
+    'documentaries': {
+        'text': 'Documentary',
+        'description': 'Documentary books',
+        'books': [
+            {'id': 1, 'name': 'Book {}', 'description': 'Book description {}', 'price': 100},
+            {'id': 2, 'name': 'Book {}', 'description': 'Book description {}', 'price': 200},
+            {'id': 3, 'name': 'Book {}', 'description': 'Book description {}', 'price': 300},
+        ]
+    },
 }
 
 

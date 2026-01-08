@@ -1,4 +1,5 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.filters.callback_data import CallbackData
 
 
 def generate_catalog_kb(catalog: dict) -> InlineKeyboardMarkup:
