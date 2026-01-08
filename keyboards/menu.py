@@ -1,7 +1,17 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-def main_menu_kb():
-    return ReplyKeyboardMarkup(
+def main_menu_kb() -> ReplyKeyboardMarkup:
+    '''
+    Generate a reply keyboard for the menu with following buttons:
+    - Catalog
+    - Profile
+    - About US
+
+    :return:
+        ReplyKeyboardMarkup: Reply keyboard with menu buttons
+    '''
+
+    keyboard = ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Catalog")],
             [
@@ -11,3 +21,5 @@ def main_menu_kb():
         ],
         resize_keyboard=True,
     )
+
+    return keyboard

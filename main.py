@@ -10,6 +10,9 @@ from handlers import register_routes
 BOT_TOKEN: str = os.getenv("BOT_TOKEN")
 
 async def main():
+    '''
+    Entry point for Telegram bot
+    '''
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
 

@@ -16,6 +16,11 @@ CATALOG = {
 @router.callback_query(F.data == 'catalog')
 @router.message(F.text == 'Catalog')
 async def catalog(update: types.Message | types.CallbackQuery):
+    '''
+    Handler for Catalog menu:
+    - Sends all categories
+    - Edit message for callback query updates (the Back button)
+    '''
     if isinstance(update, types.Message):
         await update.answer(
             'Our catalog:',
@@ -30,8 +35,19 @@ async def catalog(update: types.Message | types.CallbackQuery):
 
 @router.callback_query(F.data.startswith('category'))
 async def catalog_info(callback: types.CallbackQuery):
+    '''
+    Handler for viewing a specific catalog category.
+
+    Steps:
+    1. Extract the category key from the callback data.
+    2. Retrieve the category information from CATALOG.
+    3. Edit the original message with the category description.
+    4. Provide a 'Back' button to return to the main catalog.
+    '''
+
     category_key = callback.data.split(':')[-1]
     category = CATALOG[category_key]
+
     await callback.message.edit_text(
         text=category['description'],
         reply_markup=types.InlineKeyboardMarkup(
