@@ -3,11 +3,11 @@ from sqlalchemy.orm import mapped_column, Mapped
 from sqlalchemy import ForeignKey
 
 
-class User(BaseModel):
+class Book(BaseModel):
     '''
     Represents a books table
     '''
-    __tablename__ = 'bools'
+    __tablename__ = 'books'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
 

@@ -12,6 +12,7 @@ package-mode = false
 python = ">=3.10,<3.15"
 dotenv = "^0.9.9"
 sqlalchemy = "^2.0.45"
+aiosqlite = "^0.22.1"
 
 
 
