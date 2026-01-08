@@ -1,13 +1,10 @@
-from dotenv import load_dotenv
-import os
-load_dotenv()
+from config.settings import BOT_TOKEN
 
 import asyncio
 from aiogram import Bot, Dispatcher
 
 from handlers import register_routes
 
-BOT_TOKEN: str = os.getenv("BOT_TOKEN")
 
 async def main():
     '''

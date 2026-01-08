@@ -135,7 +135,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+config/.env
 .envrc
 .venv
 env/
@@ -210,5 +210,5 @@ __marimo__/
 # My files
 .idea/
 .venv/
-.env
+config/.env
 img.png
