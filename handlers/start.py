@@ -1,16 +1,20 @@
+from traceback import print_tb
+
 from aiogram import Router, types
 from aiogram.filters import Command
+from sqlalchemy import text
 
 from keyboards.menu import main_menu_kb
 
 router = Router()
 
 @router.message(Command('start'))
-async def start_bot(message: types.Message):
+async def start_bot(message: types.Message, session):
     '''
     Handler for /start command.
     Greets the user and shows the main menu keyboard.
     '''
+
 
     await message.answer(
         f'''
