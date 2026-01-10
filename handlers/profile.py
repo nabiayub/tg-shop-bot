@@ -72,7 +72,7 @@ async def user_deposit_amount(
 
     amount = int(message.text)
 
-    await state.set_data({'': amount})
+    await state.set_data({'amount': amount})
     await message.answer(
         text=f'“Do you confirm the balance top-up for {amount} dollars?',
         reply_markup=profile_kb.apply_deposit_action_kb()
