@@ -16,7 +16,6 @@ class CategoryCBData(CallbackData, prefix='category'):
 class BookCBData(CallbackData, prefix='book'):
     '''Callback data for selecting a book'''
     id: int
-    category: str
 
 
 def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMarkup:
@@ -41,16 +40,10 @@ def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMar
     return keyboard
 
 
-def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> InlineKeyboardMarkup:
+def generate_books_kb(books) -> InlineKeyboardMarkup:
     '''
     Generate a inline keyboard for the Telegram bot catalog for book list
-    :param books: List of dictionaries, each containing book information.
-                  Each dictionary should have at least the keys:
-                  - 'id' (int): Unique book ID
-                  - 'name' (str): Book name
-                  - 'description' (str): Book description
-                  - 'price' (int): Book price
-    :param category: string name of the category
+    :param books:
     :return: Inline keyboard with buttons as book names
     '''
     keyboard = InlineKeyboardMarkup(inline_keyboard=[])
@@ -59,8 +52,8 @@ def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> Inlin
         keyboard.inline_keyboard.append(
             [
                 InlineKeyboardButton(
-                    text=book['name'].format(book['id']),
-                    callback_data=BookCBData(id=book['id'], category=category).pack()
+                    text=book.name.format(book.id),
+                    callback_data=BookCBData(id=book.id).pack()
 
                 )
             ]
@@ -75,10 +68,10 @@ def generate_books_kb(books: List[Dict[str, int | str]], category: str) -> Inlin
     return keyboard
 
 
-def back_to_category_books(category: str) -> InlineKeyboardMarkup:
+def back_to_category_books(category_id: int) -> InlineKeyboardMarkup:
     '''
     Generate a back button for Book view to return to Books of Category
-    :param category: string name of the category
+    :param category_id: int id of the category
     :return: Inline keyboard with one button
     '''
     return InlineKeyboardMarkup(
@@ -86,7 +79,7 @@ def back_to_category_books(category: str) -> InlineKeyboardMarkup:
             [
                 InlineKeyboardButton(
                     text='Back',
-                    callback_data=CategoryCBData(category=category).pack()
+                    callback_data=CategoryCBData(category_id=category_id).pack()
                 )
             ]
         ]
