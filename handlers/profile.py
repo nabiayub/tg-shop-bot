@@ -20,7 +20,7 @@ async def user_profile_info(
 
     await message.answer(
         f'<b>{message.from_user.full_name}</b>\n\n'
-        f'Username: {user.username or ''}\n'
+        f'Username: {user.username or '-'}\n'
         f'ID: <code>{user.tg_id}</code>\n'
         f'Balance: {user.get_balance} dollars\n',
         parse_mode=ParseMode.HTML,
@@ -53,7 +53,7 @@ async def cancel_deposit(
 
     await callback_query.message.edit_text(
         f'<b>{callback_query.from_user.full_name}</b>\n\n'
-        f'Username: {user.username or ''}\n'
+        f'Username: {user.username or '-'}\n'
         f'ID: <code>{user.tg_id}</code>\n'
         f'Balance: {user.get_balance} dollars\n',
         parse_mode=ParseMode.HTML,
