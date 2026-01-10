@@ -71,13 +71,15 @@ async def book_info(
     :param callback_data: object of BookCBData
     :param book_repo: object of BookRepo
     """
-    book_id = callback_data.id
+    book_id = callback_data.book_id
     book: Book = await book_repo.get_book_by_id(book_id)
 
     await callback.message.edit_text(
         f'Name - {book.name.format(book_id)}\n'
-        f'Description - {book.description.format(book_id)}\n'
+        f'Description - {book.description}\n'
         f'Price - {book.price} dollars\n\n'
         'Do you want to buy this book?',
-        reply_markup=back_to_category_books_kb(book.category_id)
+        reply_markup=back_to_category_books_kb(
+            category_id=book.category_id,
+            book_id=book.id,)
     )

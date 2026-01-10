@@ -5,6 +5,7 @@ from typing import List, Dict
 from sqlalchemy import ScalarResult
 
 from database import Category
+from database.models import book
 from repositories.categories import CategoryRepo
 
 
@@ -15,10 +16,10 @@ class CategoryCBData(CallbackData, prefix='category'):
 
 class BookCBData(CallbackData, prefix='book'):
     '''Callback data for selecting a book'''
-    id: int
+    book_id: int
 
 class BuyBookCBData(CallbackData, prefix='buy_book'):
-    id: int
+    book_id: int
 
 
 def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMarkup:
@@ -56,7 +57,7 @@ def generate_books_kb(books) -> InlineKeyboardMarkup:
             [
                 InlineKeyboardButton(
                     text=book.name.format(book.id),
-                    callback_data=BookCBData(id=book.id).pack()
+                    callback_data=BookCBData(book_id=book.id).pack()
 
                 )
             ]
@@ -71,14 +72,23 @@ def generate_books_kb(books) -> InlineKeyboardMarkup:
     return keyboard
 
 
-def back_to_category_books_kb(category_id: int) -> InlineKeyboardMarkup:
+def back_to_category_books_kb(
+        category_id: int,
+        book_id: int) -> InlineKeyboardMarkup:
     '''
     Generate a back button for Book view to return to Books of Category
     :param category_id: int id of the category
-    :return: Inline keyboard with one button
+    :param book_id: int id of the book
+    :return: Inline keyboard with buttons back and buy
     '''
     return InlineKeyboardMarkup(
         inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='Buy',
+                    callback_data=BuyBookCBData(book_id=book_id).pack()
+                )
+            ],
             [
                 InlineKeyboardButton(
                     text='Back',
@@ -87,4 +97,5 @@ def back_to_category_books_kb(category_id: int) -> InlineKeyboardMarkup:
             ]
         ]
     )
+
 
