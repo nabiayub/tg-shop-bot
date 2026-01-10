@@ -2,11 +2,13 @@ from aiogram import F, Router, types
 from sqlalchemy import ScalarResult
 
 from database import Book, Category
-from keyboards.catalog import generate_catalog_kb, CategoryCBData, generate_books_kb, BookCBData, back_to_category_books
+from keyboards.catalog import generate_catalog_kb, CategoryCBData, generate_books_kb, BookCBData, \
+    back_to_category_books_kb
 from repositories.books import BookRepo
 from repositories.categories import CategoryRepo
 
 router = Router()
+
 
 @router.callback_query(F.data == 'catalog')
 @router.message(F.text == 'Catalog')
@@ -62,7 +64,7 @@ async def category_info(
 async def book_info(
         callback: types.CallbackQuery,
         callback_data: BookCBData,
-        book_repo: BookRepo,):
+        book_repo: BookRepo, ):
     """
     Handler for viewing a specific book information.
     :param callback: types.CallbackQuery
@@ -77,5 +79,5 @@ async def book_info(
         f'Description - {book.description.format(book_id)}\n'
         f'Price - {book.price} dollars\n\n'
         'Do you want to buy this book?',
-        reply_markup=back_to_category_books(book.category_id)
+        reply_markup=back_to_category_books_kb(book.category_id)
     )

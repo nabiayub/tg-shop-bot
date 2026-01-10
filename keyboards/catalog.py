@@ -17,6 +17,9 @@ class BookCBData(CallbackData, prefix='book'):
     '''Callback data for selecting a book'''
     id: int
 
+class BuyBookCBData(CallbackData, prefix='buy_book'):
+    id: int
+
 
 def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMarkup:
 
@@ -68,7 +71,7 @@ def generate_books_kb(books) -> InlineKeyboardMarkup:
     return keyboard
 
 
-def back_to_category_books(category_id: int) -> InlineKeyboardMarkup:
+def back_to_category_books_kb(category_id: int) -> InlineKeyboardMarkup:
     '''
     Generate a back button for Book view to return to Books of Category
     :param category_id: int id of the category
@@ -84,3 +87,4 @@ def back_to_category_books(category_id: int) -> InlineKeyboardMarkup:
             ]
         ]
     )
+
