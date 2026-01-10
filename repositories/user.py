@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import User
@@ -49,3 +49,13 @@ class UserRepo:
         user = User(tg_id=tg_id, username=username, fullname=fullname)
         self.__session.add(user)
 
+    async def update_balance(self, tg_id: int, deposit_amount: int) -> None:
+        deposit_amount *= 100
+
+
+        statement = update(User).where(User.tg_id == tg_id).values(
+            balance=deposit_amount + User.balance
+        )
+
+        await self.__session.execute(statement)
+        await self.__session.commit()

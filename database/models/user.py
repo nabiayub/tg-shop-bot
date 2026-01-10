@@ -17,7 +17,7 @@ class User(BaseModel):
     balance: Mapped[int]
 
     @property
-    def get_balance(self) -> int:
-        return self.balance
+    def get_balance(self) -> float:
+        return round(self.balance / 100, 4)
 
 

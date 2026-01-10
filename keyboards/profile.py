@@ -12,10 +12,10 @@ def profile_menu_kb() -> InlineKeyboardMarkup:
     ])
 
 
-def cancel_deposit_action_kb() -> InlineKeyboardMarkup:
+def break_action_and_back_to_ptofile_kb(text) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
-            text='Cancel',
+            text=text,
             callback_data='cancel_deposit'
         )]
     ])
@@ -35,3 +35,4 @@ def apply_deposit_action_kb() -> InlineKeyboardMarkup:
         ],
 
     ])
+

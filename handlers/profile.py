@@ -36,7 +36,7 @@ async def top_up_deposit(
     await callback_query.answer()
     await callback_query.message.edit_text(
         'Enter amount to deposit: ',
-        reply_markup=profile_kb.cancel_deposit_action_kb()
+        reply_markup=profile_kb.break_action_and_back_to_ptofile_kb('Cancel')
     )
     await state.set_state(UserDepositState.INPUT_AMOUNT)
 
@@ -77,3 +77,24 @@ async def user_deposit_amount(
         text=f'“Do you confirm the balance top-up for {amount} dollars?',
         reply_markup=profile_kb.apply_deposit_action_kb()
     )
+
+    await state.set_state(UserDepositState.APPLY_DEPOSIT)
+
+@router.callback_query(UserDepositState.APPLY_DEPOSIT)
+async def apply_deposit(
+        callback_query: types.CallbackQuery,
+        state: FSMContext,
+        user_repo: UserRepo,
+):
+    state_data = await state.get_data()
+    deposit_amount = state_data.get('amount')
+
+    await user_repo.update_balance(callback_query.from_user.id, deposit_amount)
+    await callback_query.message.edit_text(
+        f'Balance is successfully  topped up by {deposit_amount} dollars.',
+        reply_markup=profile_kb.break_action_and_back_to_ptofile_kb('Back to Profile')
+    )
+
+    await callback_query.answer()
+
+
