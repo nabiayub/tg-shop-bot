@@ -17,11 +17,11 @@ class Book(BaseModel):
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'))
 
     @property
-    def price_usd(self) -> int:
+    def price_usd(self) -> float:
         """
         Returns the price of the book
         :return: int price of the book
         """
-        return self.price / 100
+        return round(self.price / 100, 4)
 
 
