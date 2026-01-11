@@ -1,21 +1,17 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.callback_data import CallbackData
-from typing import List, Dict
-
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from sqlalchemy import ScalarResult
 
 from database import Category
-from database.models import book
-from repositories.categories import CategoryRepo
 
 
 class CategoryCBData(CallbackData, prefix='category'):
-    '''Callback data for selecting a book category'''
+    """Callback data for selecting a book category"""
     category_id: int
 
 
 class BookCBData(CallbackData, prefix='book'):
-    '''Callback data for selecting a book'''
+    """Callback data for selecting a book"""
     book_id: int
 
 class BuyBookCBData(CallbackData, prefix='buy_book'):
@@ -24,11 +20,11 @@ class BuyBookCBData(CallbackData, prefix='buy_book'):
 
 def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMarkup:
 
-    '''
+    """
     Generate a inline keyboard for the Telegram bot catalog
     :param categories: List of categories to generate inline keyboards
     :return: InlineKeyboardMarkup: Inline keyboard with buttons
-    '''
+    """
     keyboard = InlineKeyboardMarkup(inline_keyboard=[])
 
     for category in categories:
@@ -45,11 +41,11 @@ def generate_catalog_kb(categories: ScalarResult[Category]) -> InlineKeyboardMar
 
 
 def generate_books_kb(books) -> InlineKeyboardMarkup:
-    '''
+    """
     Generate a inline keyboard for the Telegram bot catalog for book list
     :param books:
     :return: Inline keyboard with buttons as book names
-    '''
+    """
     keyboard = InlineKeyboardMarkup(inline_keyboard=[])
 
     for book in books:
@@ -75,12 +71,12 @@ def generate_books_kb(books) -> InlineKeyboardMarkup:
 def back_to_category_books_kb(
         category_id: int,
         book_id: int) -> InlineKeyboardMarkup:
-    '''
+    """
     Generate a back button for Book view to return to Books of Category
     :param category_id: int id of the category
     :param book_id: int id of the book
     :return: Inline keyboard with buttons back and buy
-    '''
+    """
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
