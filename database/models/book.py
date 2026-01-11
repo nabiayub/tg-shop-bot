@@ -16,4 +16,12 @@ class Book(BaseModel):
     price: Mapped[int] # 1$ = 100 cents
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'))
 
+    @property
+    def get_price(self) -> int:
+        """
+        Returns the price of the book
+        :return: int price of the book
+        """
+        return self.price
+
 
