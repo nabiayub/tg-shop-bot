@@ -50,8 +50,6 @@ class UserRepo:
         self.__session.add(user)
 
     async def update_balance(self, tg_id: int, deposit_amount: int) -> None:
-        deposit_amount *= 100
-
 
         statement = update(User).where(User.tg_id == tg_id).values(
             balance=deposit_amount + User.balance

@@ -60,12 +60,12 @@ async def cancel_deposit(
         reply_markup=profile_kb.profile_menu_kb()
     )
 
+
 @router.message(UserDepositState.INPUT_AMOUNT)
 async def user_deposit_amount(
         message: types.Message,
         state: FSMContext,
 ):
-
     if not message.text.isdigit():
         await message.answer('Enter a integer:')
         return
@@ -80,6 +80,7 @@ async def user_deposit_amount(
 
     await state.set_state(UserDepositState.APPLY_DEPOSIT)
 
+
 @router.callback_query(UserDepositState.APPLY_DEPOSIT)
 async def apply_deposit(
         callback_query: types.CallbackQuery,
@@ -89,12 +90,13 @@ async def apply_deposit(
     state_data = await state.get_data()
     deposit_amount = state_data.get('amount')
 
-    await user_repo.update_balance(callback_query.from_user.id, deposit_amount)
+    await user_repo.update_balance(
+        callback_query.from_user.id,
+        deposit_amount * 100
+    )
     await callback_query.message.edit_text(
         f'Balance is successfully  topped up by {deposit_amount} dollars.',
         reply_markup=profile_kb.break_action_and_back_to_ptofile_kb('Back to Profile')
     )
 
     await callback_query.answer()
-
-

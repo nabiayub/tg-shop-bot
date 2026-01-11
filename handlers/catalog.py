@@ -2,10 +2,12 @@ from aiogram import F, Router, types
 from sqlalchemy import ScalarResult
 
 from database import Book, Category
+from filters.check_buy_item import FilterUserCanBuyBook
 from keyboards.catalog import generate_catalog_kb, CategoryCBData, generate_books_kb, BookCBData, \
-    back_to_category_books_kb
+    back_to_category_books_kb, BuyBookCBData
 from repositories.books import BookRepo
 from repositories.categories import CategoryRepo
+from repositories.user import UserRepo
 
 router = Router()
 
@@ -77,9 +79,25 @@ async def book_info(
     await callback.message.edit_text(
         f'Name - {book.name.format(book_id)}\n'
         f'Description - {book.description}\n'
-        f'Price - {book.price} dollars\n\n'
+        f'Price - {book.price_usd} dollars\n\n'
         'Do you want to buy this book?',
         reply_markup=back_to_category_books_kb(
             category_id=book.category_id,
             book_id=book.id,)
     )
+
+@router.callback_query(BuyBookCBData.filter(), FilterUserCanBuyBook(),)
+async def buy_book(
+        callback: types.CallbackQuery,
+        callback_data: BuyBookCBData,
+        book_repo: BookRepo,
+        user_repo: UserRepo,
+):
+    book = await book_repo.get_book_by_id(callback_data.book_id)
+    await user_repo.update_balance(callback.from_user.id, -book.price)
+
+    await callback.message.answer(
+        f'You successfully bought a book {book.name}!'
+    )
+
+    await callback.answer()
